@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>paolosotopino by paolosotopino</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>paolosotopino</h1>
+        <h2>java ruby node.js mongodb</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/paolosotopino" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>
+<a name="getting-sum-of-likes-with-ruby-mongoid-and-mongodb" class="anchor" href="#getting-sum-of-likes-with-ruby-mongoid-and-mongodb"><span class="octicon octicon-link"></span></a>Getting sum of 'likes' with Ruby, Mongoid and MongoDB</h3>
+
+<p>Suppose a collection of documents in MongoDB with some data:</p>
+
+<pre><code>{ 
+  "_id" : ObjectId("5355ffc3d3aa3c03e8ba6dca")
+  "name" : "Name 1"
+  "likes" : [ "user1", "user2" ]
+},
+{ 
+  "_id" : ObjectId("5355ffc3d3aa3c03e8ba6dcb")
+  "name" : "Name 2"
+  "likes" : [ "user1", "user2", "user4" ]
+}
+</code></pre>
+
+<p>Then, for return documents with '_id', 'name' and 'totalLikes' just need this simple code:</p>
+
+<pre><code>data = Data.collection.aggregate([
+    { '$unwind' =&gt; '$likes' },
+    { '$group' =&gt; { '_id' =&gt; { '_id' =&gt; '$_id', 'name' =&gt; '$name', 'totalLikes' =&gt; { '$sum' =&gt; 1 } } },
+    { '$project' =&gt; { '_id' =&gt; '$_id._id', 'name' =&gt; '$_id.name', 'totalLikes' =&gt; '$totalLikes' } },                                                                                                                                                    ] )
+</code></pre>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
