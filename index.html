@@ -43,12 +43,13 @@
 }
 </code></pre>
 
-<p>Then, for return documents with '_id', 'name' and 'totalLikes' just need this simple code:</p>
+<p>Then, for retrieve documents with the fields "_id", "name" and "totalLikes" just need this simple code:</p>
 
 <pre><code>data = Data.collection.aggregate([
     { '$unwind' =&gt; '$likes' },
     { '$group' =&gt; { '_id' =&gt; { '_id' =&gt; '$_id', 'name' =&gt; '$name', 'totalLikes' =&gt; { '$sum' =&gt; 1 } } },
-    { '$project' =&gt; { '_id' =&gt; '$_id._id', 'name' =&gt; '$_id.name', 'totalLikes' =&gt; '$totalLikes' } },                                                                                                                                                    ] )
+    { '$project' =&gt; { '_id' =&gt; '$_id._id', 'name' =&gt; '$_id.name', 'totalLikes' =&gt; '$totalLikes' } }
+ ] )
 </code></pre>
       </section>
     </div>
